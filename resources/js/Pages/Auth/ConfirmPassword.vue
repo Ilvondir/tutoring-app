@@ -18,7 +18,6 @@ const submit = () => {
     form.post(route('password.confirm'), {
         onFinish: () => {
             form.reset();
-
             passwordInput.value.focus();
         },
     });
@@ -26,7 +25,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Secure Area" />
+    <Head title="Zabezpieczony obszar" />
 
     <AuthenticationCard>
         <template #logo>
@@ -34,12 +33,12 @@ const submit = () => {
         </template>
 
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            This is a secure area of the application. Please confirm your password before continuing.
+            To jest zabezpieczony obszar aplikacji. Proszę potwierdzić swoje hasło przed kontynuowaniem.
         </div>
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Hasło" />
                 <TextInput
                     id="password"
                     ref="passwordInput"
@@ -55,7 +54,7 @@ const submit = () => {
 
             <div class="flex justify-end mt-4">
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Confirm
+                    Potwierdź
                 </PrimaryButton>
             </div>
         </form>
