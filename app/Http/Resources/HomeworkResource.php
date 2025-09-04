@@ -18,12 +18,12 @@ class HomeworkResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'is_completed' => $this->is_completed,
+            'complete_date' => $this->complete_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
             'student' => $this->whenLoaded('student', function () {
-                return new HomeworkResource($this->student);
+                return new UserResource($this->student);
             }),
             'teacher' => $this->whenLoaded('teacher', function () {
                 return new UserResource($this->teacher);

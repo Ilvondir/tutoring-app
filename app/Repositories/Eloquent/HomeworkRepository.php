@@ -72,9 +72,18 @@ class HomeworkRepository implements HomeworkRepositoryInterface
         }
     }
 
-    public function update(Homework $homework, array $data)
+    public function update(Homework $homework, array $data): mixed
     {
-        // TODO: Implement update() method.
+        try {
+            $homework->update($data);
+            return $homework->fresh();
+        } catch (\Exception $e) {
+            Log::error('Błąd podczas aktualizacji ' . $this->model, [
+                'data' => $data,
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
+        }
     }
 
     public function delete(Homework $homework)
@@ -85,30 +94,6 @@ class HomeworkRepository implements HomeworkRepositoryInterface
         } catch (\Exception $e) {
             Log::error('Błąd usuwania ' . $this->model, [
                 'instance_id' => $homework->id,
-                'error' => $e->getMessage(),
-            ]);
-            throw $e;
-        }
-    }
-
-    public function deleteByArray(array $ids)
-    {
-        if (empty($ids) || isset($ids['__v_isShallow']) || isset($ids['__v_isRef'])) {
-            Log::warning('Próba usunięcia ' . $this->model . ' bez poprawnej listy ID', ['ids' => $ids]);
-            return false;
-        }
-
-        try {
-            DB::transaction(function () use ($ids) {
-                $homeworks = Homework::whereIn('id', $ids)->get();
-                foreach ($homeworks as $homework) {
-                    $this->delete($homework);
-                }
-            });
-            return true;
-        } catch (\Exception $e) {
-            Log::error('Błąd masowego usuwania ' . $this->model, [
-                'ids' => $ids,
                 'error' => $e->getMessage(),
             ]);
             throw $e;

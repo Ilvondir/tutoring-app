@@ -5,7 +5,7 @@ import tableTranslations from "@/Utils/TableTranslations.js";
 import rowsLimit from "@/Utils/RowsLimit.js";
 import _ from "lodash";
 import JetInput from "@/Components/Input.vue";
-import {Link, router} from "@inertiajs/vue3";
+import {Link, router, usePage} from "@inertiajs/vue3";
 import 'boxicons';
 import TableLite from "vue3-table-lite";
 import JetButton from "@/Components/Button.vue";
@@ -21,6 +21,7 @@ const ids_array = ref([]);
 const url = ref('');
 const protocol = ref('');
 const toast = useToast()
+const page = usePage();
 
 const table = reactive({
     isLoading: false,
@@ -67,11 +68,11 @@ const table = reactive({
         },
         {
             label: "Ukończone",
-            field: 'is_completed',
+            field: 'complete_date',
             width: '15%',
             sortable: true,
             display: row => {
-                if (row.is_completed) return '<span class="text-[#14b069]">Tak</span>';
+                if (row.complete_date) return '<span class="text-[#14b069]">' + row.complete_date + '</span>';
                 else return '<span style="color: red">Nie</span>';
             }
         },
@@ -241,7 +242,7 @@ onMounted(() => {
                                     />
                                 </div>
                             </div>
-                            <div class="flex flex-row">
+                            <div class="flex flex-row" v-if="page.props.user.roles.includes('teacher')">
                                 <Link :href="route('homeworks.create')" disabled>
                                     <div
                                         class="flex items-center bg-[#4F46E5] hover:bg-[#2F26C5] border-[#2F26C5] hover:border-[#4F46E5] text-white font-medium py-2 px-4 border-b-4 rounded cursor-pointer h-10">
@@ -283,7 +284,7 @@ onMounted(() => {
                         :pageSize="parseInt(table.pageSize)"
                         :messages="table.messages"
                         :page-options="table.pageOptions"
-                        :has-checkbox="true"
+                        :has-checkbox="page.props.user.roles.includes('teacher')"
                         @do-search="doSearch"
                         @return-checked-rows="updateCheckedRows"
                         @is-finished="table.isLoading = false"
@@ -292,24 +293,37 @@ onMounted(() => {
                         <template v-slot:actions="data">
                             <div class="justify-center flex">
 
-                                <div class="ml-2">
-                                    <Link
-                                        class="flex items-center focus:text-indigo-500 link justify-center"
-                                        :href="route('homeworks.edit', data.value.id)"
-                                    >
-                                        <EditIcon/>
-                                    </Link>
-                                </div>
+                                <template v-if="page.props.user.roles.includes('student')">
+                                    <div>
+                                        <Link
+                                            class="flex items-center focus:text-indigo-500 link justify-center"
+                                            :href="route('homeworks.show', data.value.id)"
+                                        >
+                                            <InfoIcon/>
+                                        </Link>
+                                    </div>
+                                </template>
 
-                                <div class="ml-2">
-                                    <button
-                                        @click="deleteRow(data.value.id)"
-                                        type="submit"
-                                        class="cursor-pointer"
-                                    >
-                                        <DeleteIcon/>
-                                    </button>
-                                </div>
+                                <template v-if="page.props.user.roles.includes('teacher')">
+                                    <div class="ml-2">
+                                        <Link
+                                            class="flex items-center focus:text-indigo-500 link justify-center"
+                                            :href="route('homeworks.edit', data.value.id)"
+                                        >
+                                            <EditIcon/>
+                                        </Link>
+                                    </div>
+
+                                    <div class="ml-2">
+                                        <button
+                                            @click="deleteRow(data.value.id)"
+                                            type="submit"
+                                            class="cursor-pointer"
+                                        >
+                                            <DeleteIcon/>
+                                        </button>
+                                    </div>
+                                </template>
                             </div>
                         </template>
                     </table-lite>

@@ -60,6 +60,18 @@ class Exercise extends Model
     }
 
     /**
+     * @param $date
+     * @return string|null
+     */
+    public function getCompleteDateAttribute($date): string|null
+    {
+        if ($date)
+            return Carbon::parse($date)->timezone('Europe/Warsaw')->format('Y-m-d H:i:s');
+        else
+            return null;
+    }
+
+    /**
      * @return BelongsTo
      */
     public function homework(): BelongsTo

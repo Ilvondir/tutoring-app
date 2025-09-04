@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -20,6 +21,10 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('homeworks', HomeworkController::class);
+    Route::resource('exercises', ExerciseController::class);
 
     Route::get('students', [UserController::class, 'getStudentsToSelect'])->name('users.getStudentsToSelect');
+
+    Route::get('homeworks/destroyArray/ids', [HomeworkController::class, 'destroyArray'])->name('homeworks.destroyArray');
+
 });

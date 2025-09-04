@@ -23,11 +23,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ])->assignRole($teacherRole);
 
-        $teachers = User::factory(3)->create()->each(function ($user) use ($teacherRole) {
+
+        User::factory(3)->create()->each(function ($user) use ($teacherRole) {
             $user->assignRole($teacherRole);
         });
 
-        User::factory(10)->create()->each(function ($student) use ($studentRole, $teachers) {
+        User::factory(10)->create()->each(function ($student) use ($studentRole) {
             $student->assignRole($studentRole);
 
             Homework::factory()

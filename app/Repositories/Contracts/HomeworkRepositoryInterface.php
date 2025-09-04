@@ -20,6 +20,4 @@ interface HomeworkRepositoryInterface
     public function update(Homework $homework, array $data);
 
     public function delete(Homework $homework);
-
-    public function deleteByArray(array $ids);
 }

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('answer');
 
             $table->integer('order');
-            $table->boolean('is_completed')->default(false);
+            $table->dateTime('complete_date')->nullable()->default(null);
             $table->foreignId('homework_id')->constrained('homeworks')->cascadeOnDelete();
 
             $table->timestamps();

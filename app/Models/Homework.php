@@ -61,6 +61,18 @@ class Homework extends Model
     }
 
     /**
+     * @param $date
+     * @return string|null
+     */
+    public function getCompleteDateAttribute($date): string|null
+    {
+        if ($date)
+            return Carbon::parse($date)->timezone('Europe/Warsaw')->format('Y-m-d H:i:s');
+        else
+            return null;
+    }
+
+    /**
      * @return BelongsTo
      */
     public function student(): BelongsTo
@@ -81,6 +93,6 @@ class Homework extends Model
      */
     public function exercises(): HasMany
     {
-        return $this->hasMany(Exercise::class);
+        return $this->hasMany(Exercise::class)->orderBy('order');
     }
 }

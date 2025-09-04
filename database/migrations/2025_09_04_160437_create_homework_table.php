@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('homeworks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->boolean('is_completed')->default(false);
+            $table->dateTime('complete_date')->nullable()->default(null);
             $table->foreignId('student_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('teacher_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();

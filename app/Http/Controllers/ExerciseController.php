@@ -2,33 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ExerciseUpdateRequest;
 use App\Models\Exercise;
+use App\Repositories\Eloquent\ExerciseRepository;
 use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    protected ExerciseRepository $exerciseRepository;
+    protected string $model;
+    protected string $routePrefix;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function __construct(ExerciseRepository $exerciseRepository)
     {
-        //
+        $this->exerciseRepository = $exerciseRepository;
+        $this->model = 'Exercise';
+        $this->routePrefix = 'exercises';
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ExerciseUpdateRequest $request)
     {
-        //
+        $data = $request->validated();
+        $this->exerciseRepository->create($data);
+        return back();
     }
 
     /**
@@ -50,9 +49,11 @@ class ExerciseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Exercise $exercise)
+    public function update(ExerciseUpdateRequest $request, Exercise $exercise)
     {
-        //
+        $data = $request->validated();
+        $this->exerciseRepository->update($exercise, $data);
+        return back();
     }
 
     /**
@@ -60,6 +61,7 @@ class ExerciseController extends Controller
      */
     public function destroy(Exercise $exercise)
     {
-        //
+        $this->exerciseRepository->delete($exercise);
+        return back();
     }
 }

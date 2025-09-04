@@ -23,13 +23,6 @@ let form = useForm({
     student_id: 0,
 });
 
-onMounted(() => {
-    axios.get(route('users.getStudentsToSelect'))
-        .then((response) => {
-            options.value = response.data;
-        })
-});
-
 const submitForm = () => {
     form.post(route('homeworks.store'), {
         onSuccess: () => {
@@ -51,6 +44,12 @@ const submitForm = () => {
     });
 }
 
+onMounted(() => {
+    axios.get(route('users.getStudentsToSelect'))
+        .then((response) => {
+            options.value = response.data;
+        })
+});
 </script>
 
 <template>
@@ -59,7 +58,7 @@ const submitForm = () => {
     >
         <template #header>
             <h2 class="font-semibold text-xl dark:text-gray-400 text-gray-800 leading-tight">
-                <Link class="no-underline text-[#14b069]" :href="route('homeworks.index')">
+                <Link class="no-underline text-[#4F46E5]" :href="route('homeworks.index')">
                     <span>Prace domowe</span>
                 </Link>
                 / <span v-if="form.title.length<50">{{ form.title }}</span>
@@ -102,7 +101,7 @@ const submitForm = () => {
 
                                 <JetButton
                                     type="submit"
-                                    class="flex ml-2 items-center bg-[#14b069] hover:bg-[#048029] border-[#048029] hover:border-[#14b069] text-white font-medium py-2 px-4 border-b-4 rounded cursor-pointer h-10"
+                                    class="flex ml-2 items-center bg-[#4F46E5] hover:bg-[#2F26C5] border-[#2F26C5] hover:border-[#4F46E5] text-white font-medium py-2 px-4 border-b-4 rounded cursor-pointer h-10"
                                 >
                                     <div class="flex items-center">
                                         <p class="mr-2 ">Zapisz</p>

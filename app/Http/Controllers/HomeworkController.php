@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\HomeworkStoreRequest;
+use App\Http\Requests\HomeworkUpdateRequest;
 use App\Http\Resources\HomeworkResource;
 use App\Models\Homework;
 use App\Repositories\Eloquent\HomeworkRepository;
@@ -53,7 +54,7 @@ class HomeworkController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param HomeworkStoreRequest $request
+     * @param HomeworkUpdateRequest $request
      * @return RedirectResponse
      */
     public function store(HomeworkStoreRequest $request): RedirectResponse
@@ -76,15 +77,19 @@ class HomeworkController extends Controller
      */
     public function edit(Homework $homework)
     {
-        //
+        return Inertia::render($this->model . '/Edit', [
+            'item' => new HomeworkResource($this->homeworkRepository->loadRelations($homework)),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Homework $homework)
+    public function update(HomeworkUpdateRequest $request, Homework $homework)
     {
-        //
+        $validated = $request->validated();
+        $this->homeworkRepository->update($homework, $validated);
+        return back();
     }
 
     /**
@@ -93,6 +98,16 @@ class HomeworkController extends Controller
     public function destroy(Homework $homework)
     {
         $this->homeworkService->deleteHomework($homework);
+        return back();
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function destroyArray(Request $request): mixed
+    {
+        $this->homeworkService->deleteByArray($request->ids);
         return back();
     }
 }

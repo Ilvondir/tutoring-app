@@ -19,7 +19,7 @@ class ExerciseResource extends JsonResource
             'assignment' => $this->assignment,
             'answer' => $this->answer,
             'order' => $this->order,
-            'is_completed' => $this->is_completed,
+            'complete_date' => $this->complete_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'homework' => $this->whenLoaded('homework', function () {

@@ -16,7 +16,7 @@ class ExerciseFactory extends Factory
             'assignment' => $this->faker->sentence(10),
             'answer' => $this->faker->word(),
             'order' => $this->faker->numberBetween(1, 10),
-            'is_completed' => $this->faker->boolean(20),
+            'complete_date' => $this->faker->optional()->dateTime(),
             'homework_id' => Homework::factory(),
         ];
     }

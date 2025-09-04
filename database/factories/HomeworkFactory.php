@@ -13,7 +13,7 @@ class HomeworkFactory extends Factory
     public function definition(): array
     {
         return [
-            'is_completed' => $this->faker->boolean(30),
+            'complete_date' => $this->faker->optional()->dateTime(),
             'student_id' => User::factory(),
             'title' => $this->faker->word(),
         ];
