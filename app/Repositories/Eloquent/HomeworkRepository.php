@@ -62,7 +62,7 @@ class HomeworkRepository implements HomeworkRepositoryInterface
     public function create(array $data)
     {
         try {
-            return Homework::create($data);
+            return Homework::create($data + ['teacher_id' => Auth::id()]);
         } catch (\Exception $e) {
             Log::error('Błąd podczas tworzenia ' . $this->model, [
                 'data' => $data,

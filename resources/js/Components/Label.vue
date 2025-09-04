@@ -9,7 +9,8 @@ const labelRef = ref(null);
 const isRequired = ref(false);
 
 onMounted(() => {
-    isRequired.value = document.querySelector('#' + labelRef.value.getAttribute('for')).hasAttribute('required');
+    if (document.querySelector('#' + labelRef.value.getAttribute('for')))
+        isRequired.value = document.querySelector('#' + labelRef.value.getAttribute('for')).hasAttribute('required');
 })
 </script>
 

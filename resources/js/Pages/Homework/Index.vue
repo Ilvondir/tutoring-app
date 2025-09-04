@@ -59,6 +59,7 @@ const table = reactive({
         {
             label: "Data dodania",
             width: '20%',
+            field: 'created_at',
             sortable: true,
             display: row => {
                 return row.created_at;

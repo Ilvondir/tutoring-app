@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HomeworkStoreRequest;
 use App\Http\Resources\HomeworkResource;
 use App\Models\Homework;
 use App\Repositories\Eloquent\HomeworkRepository;
+use App\Services\HomeworkService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
@@ -14,12 +17,14 @@ class HomeworkController extends Controller
 {
 
     protected HomeworkRepository $homeworkRepository;
+    protected HomeworkService $homeworkService;
     protected string $model;
     protected string $routePrefix;
 
-    public function __construct(HomeworkRepository $homeworkRepository)
+    public function __construct(HomeworkRepository $homeworkRepository, HomeworkService $homeworkService)
     {
         $this->homeworkRepository = $homeworkRepository;
+        $this->homeworkService = $homeworkService;
         $this->model = 'Homework';
         $this->routePrefix = 'homeworks';
     }
@@ -39,18 +44,23 @@ class HomeworkController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @return Response
      */
-    public function create()
+    public function create(): Response
     {
-        //
+        return Inertia::render($this->model . '/Create', []);
     }
 
     /**
      * Store a newly created resource in storage.
+     * @param HomeworkStoreRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(HomeworkStoreRequest $request): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+        $homework = $this->homeworkRepository->create($validated);
+        return to_route($this->routePrefix . '.edit', $homework->id);
     }
 
     /**
@@ -82,6 +92,7 @@ class HomeworkController extends Controller
      */
     public function destroy(Homework $homework)
     {
-        //
+        $this->homeworkService->deleteHomework($homework);
+        return back();
     }
 }

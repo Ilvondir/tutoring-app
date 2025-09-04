@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeworkController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,4 +20,6 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('homeworks', HomeworkController::class);
+
+    Route::get('students', [UserController::class, 'getStudentsToSelect'])->name('users.getStudentsToSelect');
 });
