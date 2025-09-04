@@ -7,14 +7,13 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Role::create(['name' => 'tutor']);
+        Role::create(['name' => 'teacher']);
         Role::create(['name' => 'student']);
     }
 
@@ -23,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Role::destroy(['name' => 'tutor']);
+        Role::destroy(['name' => 'teacher']);
         Role::destroy(['name' => 'student']);
     }
 };

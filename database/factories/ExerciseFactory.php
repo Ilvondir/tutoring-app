@@ -2,22 +2,22 @@
 
 namespace Database\Factories;
 
+use App\Models\Homework;
+use App\Models\Exercise;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Exercise>
- */
 class ExerciseFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Exercise::class;
+
     public function definition(): array
     {
         return [
-            //
+            'assignment' => $this->faker->sentence(10),
+            'answer' => $this->faker->word(),
+            'order' => $this->faker->numberBetween(1, 10),
+            'is_completed' => $this->faker->boolean(20),
+            'homework_id' => Homework::factory(),
         ];
     }
 }

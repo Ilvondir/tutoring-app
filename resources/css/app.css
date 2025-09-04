@@ -5,3 +5,107 @@
 [x-cloak] {
     display: none;
 }
+
+.jetbutton {
+    cursor: pointer;
+}
+
+.dark .vtl, .dark .vtl-card, .dark .vtl-thead-th, .dark .vtl-paging-page-dropdown, .dark .vtl-paging-count-dropdown, .dark .vtl-paging-pagination-ul li a {
+    background: rgb(31, 41, 55) !important;
+}
+
+.dark .vtl-thead-column, .dark .vtl-card, .dark .vtl-tbody-td, .dark .vtl-paging-info, .dark .vtl-paging-count-label, .dark .vtl-paging-page-label {
+    color: rgb(156, 163, 175) !important;
+}
+
+.dark .vtl-tbody-tr:hover {
+    background: rgb(51, 61, 75) !important;
+}
+
+.dark .vtl-table td {
+    border-color: rgb(186, 193, 205) !important;
+}
+
+.vtl-table .vtl-thead .vtl-thead-th {
+    color: black;
+    background-color: white;
+    border: none;
+    border-bottom: 3px solid #e6e6e6;
+}
+
+.vtl-table td {
+    border: none !important;
+    border-top: 2px solid #f3f4f6 !important;
+}
+
+.vtl-paging-info {
+    color: black;
+}
+
+.vtl-paging-count-label,
+.vtl-paging-page-label {
+    color: black;
+}
+
+.vtl-paging-pagination-page-link {
+    border: none;
+}
+
+.vtl-paging-pagination-page-li:not(.disabled) a {
+    color: #4F46E5 !important;
+}
+
+.vtl-paging-count-dropdown, .vtl-paging-page-dropdown {
+    padding-right: 31px !important;
+    padding-left: 10px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    margin: 0 9px !important;
+}
+
+.vtl-paging-pagination-page-li:nth-child(1) a {
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.vtl-paging-pagination-page-li:nth-last-child(1) a {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.vtl-tbody-checkbox, .vtl-thead-checkbox {
+    color: #4F46E5 !important;
+}
+
+.vtl-tbody-checkbox:focus, .vtl-thead-checkbox:focus {
+    outline-color: #4F46E5 !important;
+}
+
+.error-message {
+    color: red;
+}
+
+.dark .vue-apexcharts tspan {
+    fill: rgb(156, 163, 175) !important;
+}
+
+.vue-apexcharts tspan {
+    fill: black !important;
+}
+
+
+.dark .apexcharts-title-text {
+    fill: rgb(156, 163, 175) !important;
+}
+
+.apexcharts-title-text {
+    fill: black !important;
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(67%) sepia(6%) saturate(0%) hue-rotate(191deg) brightness(93%) contrast(88%);
+}
+
+.dark input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(67%) sepia(6%) saturate(0%) hue-rotate(191deg) brightness(93%) contrast(88%);
+}

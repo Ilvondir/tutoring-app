@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Exercise;
+use App\Models\Homework;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +15,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $teacherRole = Role::firstOrCreate(['name' => 'teacher']);
+        $studentRole = Role::firstOrCreate(['name' => 'student']);
 
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-        ]);
+        ])->assignRole($teacherRole);
+
+        $teachers = User::factory(3)->create()->each(function ($user) use ($teacherRole) {
+            $user->assignRole($teacherRole);
+        });
+
+        User::factory(10)->create()->each(function ($student) use ($studentRole, $teachers) {
+            $student->assignRole($studentRole);
+
+            Homework::factory()
+                ->count(random_int(1, 3))
+                ->for($student, 'student')
+                ->create([
+                    'teacher_id' => random_int(1, 4),
+                ])
+                ->each(function ($homework) {
+                    Exercise::factory()
+                        ->count(random_int(2, 5))
+                        ->for($homework)
+                        ->create();
+                });
+        });
     }
 }

@@ -10,10 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('homework', function (Blueprint $table) {
+        Schema::create('homeworks', function (Blueprint $table) {
             $table->id();
-            $table->boolean('completed')->default(false);
+            $table->string('title');
+            $table->boolean('is_completed')->default(false);
             $table->foreignId('student_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('teacher_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('homework');
+        Schema::dropIfExists('homeworks');
     }
 };
