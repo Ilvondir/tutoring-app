@@ -14,8 +14,9 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class HomeworkController extends Controller
+class HomeworkController extends \Illuminate\Routing\Controller
 {
+    use \Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
     protected HomeworkRepository $homeworkRepository;
     protected HomeworkService $homeworkService;
@@ -28,6 +29,7 @@ class HomeworkController extends Controller
         $this->homeworkService = $homeworkService;
         $this->model = 'Homework';
         $this->routePrefix = 'homeworks';
+        $this->authorizeResource(Homework::class);
     }
 
     /**

@@ -9,8 +9,10 @@ use App\Repositories\Eloquent\HomeworkRepository;
 use App\Services\ExerciseService;
 use Illuminate\Http\Request;
 
-class ExerciseController extends Controller
+class ExerciseController extends \Illuminate\Routing\Controller
 {
+    use \Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
     protected ExerciseRepository $exerciseRepository;
     protected ExerciseService $exerciseService;
     protected HomeworkRepository $homeworkRepository;
@@ -24,6 +26,7 @@ class ExerciseController extends Controller
         $this->homeworkRepository = $homeworkRepository;
         $this->model = 'Exercise';
         $this->routePrefix = 'exercises';
+        $this->authorizeResource($this->model);
     }
 
     /**

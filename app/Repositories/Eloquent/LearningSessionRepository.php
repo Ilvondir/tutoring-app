@@ -5,7 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\LearningSession;
 use App\Models\User;
 use App\Repositories\Contracts\LearningSessionInterface;
-use App\Repositories\Contracts\UserRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -29,5 +29,23 @@ class LearningSessionRepository implements LearningSessionInterface
             ]);
             throw $e;
         }
+    }
+
+    public function paginate(Request $request)
+    {
+        $rows = LearningSession::query()->with('user');
+
+        $rows->join('users', 'users.id', '=', 'learning_sessions.user_id')
+            ->where(function ($query) use ($request) {
+                $query->orWhere('learning_sessions.id', 'LIKE', '%' . $request->filter . '%')
+                    ->orWhere('learning_sessions.created_at', 'LIKE', '%' . $request->filter . '%')
+                    ->orWhere('users.name', 'LIKE', '%' . $request->filter . '%');
+            });
+
+        $order = $request->order === 'id' ? 'learning_sessions.id' : $request->order;
+
+        $rows->orderBy($order, $request->sort);
+
+        return $rows->paginate($request->limit);
     }
 }

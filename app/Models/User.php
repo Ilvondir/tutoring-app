@@ -83,4 +83,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Homework::class, 'teacher_id');
     }
+
+    public function learning_sessions(): HasMany
+    {
+        return $this->hasMany(LearningSession::class);
+    }
 }

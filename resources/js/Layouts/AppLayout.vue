@@ -64,6 +64,7 @@ const logout = () => {
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('learning-sessions.index')"
+                                         v-if="page.props.user.roles.includes('teacher')"
                                          :active="route().current()?.includes('learning-sessions')">
                                     Sesje nauki
                                 </NavLink>
@@ -244,6 +245,7 @@ const logout = () => {
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink :href="route('learning-sessions.index')"
+                                           v-if="page.props.user.roles.includes('teacher')"
                                            :active="route().current()?.includes('learning-sessions')">
                             Sesje nauki
                         </ResponsiveNavLink>
