@@ -1,18 +1,20 @@
 <script setup>
 import {ref} from 'vue';
-import {Head, Link, router} from '@inertiajs/vue3';
+import {Head, Link, router, usePage} from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import Timer from "@/Components/Timer.vue";
 
 defineProps({
     title: String,
 });
 
 const showingNavigationDropdown = ref(false);
+const page = usePage();
 
 const switchToTeam = (team) => {
     router.put(route('current-team.update'), {
@@ -59,6 +61,16 @@ const logout = () => {
                                     Prace domowe
                                 </NavLink>
                             </div>
+
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('learning-sessions.index')"
+                                         :active="route().current()?.includes('learning-sessions')">
+                                    Sesje nauki
+                                </NavLink>
+                            </div>
+
+                            <Timer v-if="page.props.user.roles.includes('student')"/>
+
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -229,6 +241,11 @@ const logout = () => {
                         <ResponsiveNavLink :href="route('homeworks.index')"
                                            :active="route().current()?.includes('homeworks')">
                             Prace domowe
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('learning-sessions.index')"
+                                           :active="route().current()?.includes('learning-sessions')">
+                            Sesje nauki
                         </ResponsiveNavLink>
                     </div>
 

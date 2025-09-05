@@ -7,7 +7,7 @@ const page = usePage();
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout title="Strona główna">
         <template #header>
             <h2 class="font-semibold text-xl dark:text-gray-400 text-gray-800 leading-tight">
                 Strona główna

@@ -54,7 +54,6 @@ class ExerciseRepository implements ExerciseRepositoryInterface
     {
         try {
             $maxOrder = Exercise::whereHomeworkId($data['homework_id'])->max('order');
-            dd($maxOrder);
             return Exercise::create($data + ['order' => $maxOrder + 1]);
         } catch (\Exception $e) {
             Log::error('Błąd podczas tworzenia ' . $this->model, [

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\HomeworkController;
+use App\Http\Controllers\LearningSessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,7 @@ Route::middleware([
 
     Route::resource('homeworks', HomeworkController::class);
     Route::resource('exercises', ExerciseController::class);
+    Route::resource('learning-sessions', LearningSessionController::class)->only(['store', 'index']);
 
     Route::get('students', [UserController::class, 'getStudentsToSelect'])->name('users.getStudentsToSelect');
 
