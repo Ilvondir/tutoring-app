@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ExerciseUpdateRequest;
 use App\Models\Exercise;
 use App\Repositories\Eloquent\ExerciseRepository;
+use App\Services\ExerciseService;
 use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
 {
     protected ExerciseRepository $exerciseRepository;
+    protected ExerciseService $exerciseService;
     protected string $model;
     protected string $routePrefix;
 
-    public function __construct(ExerciseRepository $exerciseRepository)
+    public function __construct(ExerciseRepository $exerciseRepository, ExerciseService $exerciseService)
     {
         $this->exerciseRepository = $exerciseRepository;
+        $this->exerciseService = $exerciseService;
         $this->model = 'Exercise';
         $this->routePrefix = 'exercises';
     }
@@ -62,6 +65,13 @@ class ExerciseController extends Controller
     public function destroy(Exercise $exercise)
     {
         $this->exerciseRepository->delete($exercise);
+        return back();
+    }
+
+    public function move(Exercise $exercise)
+    {
+        $direction = request()->input('direction');
+        $this->exerciseService->move($exercise, $direction);
         return back();
     }
 }

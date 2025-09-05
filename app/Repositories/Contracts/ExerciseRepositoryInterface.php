@@ -13,6 +13,8 @@ interface ExerciseRepositoryInterface
 
     public function getHomeworkExercises(Homework $homework);
 
+    public function loadRelations(Exercise $exercise);
+
     public function delete($exercise);
 
 }

@@ -45,6 +45,7 @@ class ExerciseRepository implements ExerciseRepositoryInterface
     {
         try {
             $maxOrder = Exercise::whereHomeworkId($data['homework_id'])->max('order');
+            dd($maxOrder);
             return Exercise::create($data + ['order' => $maxOrder + 1]);
         } catch (\Exception $e) {
             Log::error('Błąd podczas tworzenia ' . $this->model, [
@@ -69,4 +70,13 @@ class ExerciseRepository implements ExerciseRepositoryInterface
         }
     }
 
+    public function loadRelations(Exercise $exercise)
+    {
+        return $exercise->load(['homework']);
+    }
+
+    public function getExerciseInHomeworkByOrder(Homework $homework, int $order)
+    {
+        return $homework->exercises()->whereOrder($order)->first();
+    }
 }

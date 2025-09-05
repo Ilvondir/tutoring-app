@@ -1,17 +1,15 @@
 <script setup>
 import {Link, router, useForm} from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import JetButton from "@/Components/Button.vue";
 import JetLabel from "@/Components/Label.vue";
 import JetInput from "@/Components/Input.vue";
 import 'boxicons';
 import ReturnButton from "@/Components/ReturnButton.vue";
-import Checkbox from "@/Components/Checkbox.vue";
 import Toast from "@/Components/Toast.vue";
 import {useToast} from "vue-toastification";
 import TextArea from "@/Components/TextArea.vue";
-import Input from "@/Components/Input.vue";
 import DialogModal from "@/Components/DialogModal.vue";
 
 const props = defineProps({
@@ -127,6 +125,31 @@ const setEditingExercise = (id, index) => {
     hasOpenModal.value = true;
 }
 
+const moveExercise = (id, direction) => {
+    router.patch(route('exercises.move', id), {
+        direction
+    }, {
+        preserveScroll: true,
+        onSuccess: () => {
+            toast.success({
+                component: Toast,
+                props: {
+                    operation: 'Operacja zakończona powodzeniem!'
+                }
+            });
+            hasOpenModal.value = false;
+        },
+        onError: () => {
+            toast.error({
+                component: Toast,
+                props: {
+                    operation: 'Podczas wykonywania operacji wystąpił błąd.'
+                }
+            });
+        },
+    });
+}
+
 </script>
 
 <template>
@@ -239,6 +262,13 @@ const setEditingExercise = (id, index) => {
 
                                 <box-icon name="trash" color="#4F46E5" size="s" class="cursor-pointer ml-1"
                                           @click="() => deleteExercise(exercise.id)"></box-icon>
+
+                                <box-icon name="chevron-up" color="#4F46E5" size="s"
+                                          class="cursor-pointer ml-4" v-if="index !== 0"
+                                          @click="() => moveExercise(exercise.id, 1)"></box-icon>
+                                <box-icon name="chevron-down" color="#4F46E5" size="s" class="cursor-pointer ml-1"
+                                          v-if="index !== props.item.exercises.length-1"
+                                          @click="() => moveExercise(exercise.id, 0)"></box-icon>
                             </div>
 
 
