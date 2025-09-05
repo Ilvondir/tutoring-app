@@ -28,4 +28,5 @@ Route::middleware([
     Route::get('homeworks/destroyArray/ids', [HomeworkController::class, 'destroyArray'])->name('homeworks.destroyArray');
 
     Route::patch('exercises/{exercise}/move', [ExerciseController::class, 'move'])->name('exercises.move');
+    Route::patch('exercises/{exercise}/check', [ExerciseController::class, 'check'])->name('exercises.check');
 });

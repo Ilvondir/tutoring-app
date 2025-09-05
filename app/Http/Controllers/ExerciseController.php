@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ExerciseUpdateRequest;
 use App\Models\Exercise;
 use App\Repositories\Eloquent\ExerciseRepository;
+use App\Repositories\Eloquent\HomeworkRepository;
 use App\Services\ExerciseService;
 use Illuminate\Http\Request;
 
@@ -12,13 +13,15 @@ class ExerciseController extends Controller
 {
     protected ExerciseRepository $exerciseRepository;
     protected ExerciseService $exerciseService;
+    protected HomeworkRepository $homeworkRepository;
     protected string $model;
     protected string $routePrefix;
 
-    public function __construct(ExerciseRepository $exerciseRepository, ExerciseService $exerciseService)
+    public function __construct(ExerciseRepository $exerciseRepository, ExerciseService $exerciseService, HomeworkRepository $homeworkRepository)
     {
         $this->exerciseRepository = $exerciseRepository;
         $this->exerciseService = $exerciseService;
+        $this->homeworkRepository = $homeworkRepository;
         $this->model = 'Exercise';
         $this->routePrefix = 'exercises';
     }
@@ -31,22 +34,6 @@ class ExerciseController extends Controller
         $data = $request->validated();
         $this->exerciseRepository->create($data);
         return back();
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Exercise $exercise)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Exercise $exercise)
-    {
-        //
     }
 
     /**
@@ -73,5 +60,24 @@ class ExerciseController extends Controller
         $direction = request()->input('direction');
         $this->exerciseService->move($exercise, $direction);
         return back();
+    }
+
+    public function check(Exercise $exercise)
+    {
+        $answer = request()->input('answer');
+        $isCorrect = $this->exerciseRepository->checkAnswer($exercise, $answer);
+
+        if ($isCorrect) {
+            $homework = $exercise->homework;
+            if ($this->homeworkRepository->hasFinishedAllExercises($homework)) {
+                $this->homeworkRepository->update($homework, ['complete_date' => now()]);
+            }
+
+            return back();
+        } else {
+            return back()->withErrors([
+                'answer' => 'Odpowiedź błędna!'
+            ]);
+        }
     }
 }

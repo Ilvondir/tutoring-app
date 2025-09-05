@@ -7,8 +7,10 @@ use App\Models\Homework;
 use App\Models\User;
 use App\Repositories\Contracts\ExerciseRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ExerciseRepository implements ExerciseRepositoryInterface
 {
@@ -30,7 +32,14 @@ class ExerciseRepository implements ExerciseRepositoryInterface
     public function delete($exercise)
     {
         try {
+            $homework = $exercise->homework;
             $exercise->delete();
+
+            $otherExercises = $homework->exercises()->get();
+            foreach ($otherExercises as $index => $item) {
+                $this->update($item, ['order' => $index + 1]);
+            }
+
             return true;
         } catch (\Exception $e) {
             Log::error('Błąd usuwania ' . $this->model, [
@@ -78,5 +87,28 @@ class ExerciseRepository implements ExerciseRepositoryInterface
     public function getExerciseInHomeworkByOrder(Homework $homework, int $order)
     {
         return $homework->exercises()->whereOrder($order)->first();
+    }
+
+    public function checkAnswer(Exercise $exercise, string $answer): bool
+    {
+        try {
+            $userAnswer = Str::lower(Str::trim($answer));
+            $exerciseAnswer = Str::lower(Str::trim($exercise->answer));
+
+            if ($exerciseAnswer === $userAnswer) {
+                $this->update($exercise, ['complete_date' => now()]);
+                return true;
+            }
+
+            return false;
+
+        } catch (\Exception $e) {
+            Log::error('Błąd podczas sprawdzenia odpowiedzi modelu ' . $this->model, [
+                'data' => $exercise,
+                'answer' => $answer,
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
+        }
     }
 }

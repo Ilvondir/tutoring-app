@@ -99,4 +99,12 @@ class HomeworkRepository implements HomeworkRepositoryInterface
             throw $e;
         }
     }
+
+    public function hasFinishedAllExercises(Homework $homework): bool
+    {
+        return $homework
+                ->exercises()
+                ->whereNull('complete_date')
+                ->count() === 0;
+    }
 }

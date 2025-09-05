@@ -69,7 +69,9 @@ class HomeworkController extends Controller
      */
     public function show(Homework $homework)
     {
-        //
+        return Inertia::render($this->model . '/Show', [
+            'item' => new HomeworkResource($this->homeworkRepository->loadRelations($homework)),
+        ]);
     }
 
     /**
