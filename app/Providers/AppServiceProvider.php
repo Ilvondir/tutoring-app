@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Models\LearningSession;
-use App\Policies\LearningSessionPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         JsonResource::withoutWrapping();
-        Gate::policy(LearningSession::class, LearningSessionPolicy::class);
+        Gate::policy(LearningSession::class, UserPolicy::class);
     }
 }

@@ -70,6 +70,14 @@ const logout = () => {
                                 </NavLink>
                             </div>
 
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('users.index')"
+                                         v-if="page.props.user.roles.includes('teacher')"
+                                         :active="route().current()?.includes('users')">
+                                    Użytkownicy
+                                </NavLink>
+                            </div>
+
                             <Timer v-if="page.props.user.roles.includes('student')"/>
 
                         </div>
@@ -248,6 +256,12 @@ const logout = () => {
                                            v-if="page.props.user.roles.includes('teacher')"
                                            :active="route().current()?.includes('learning-sessions')">
                             Sesje nauki
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('users.index')"
+                                           v-if="page.props.user.roles.includes('teacher')"
+                                           :active="route().current()?.includes('users')">
+                            Użytkownicy
                         </ResponsiveNavLink>
                     </div>
 

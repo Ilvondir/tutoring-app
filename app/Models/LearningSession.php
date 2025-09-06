@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Policies\LearningSessionPolicy;
+use App\Policies\UserPolicy;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[UsePolicy(LearningSessionPolicy::class)]
+#[UsePolicy(UserPolicy::class)]
 class LearningSession extends Model
 {
     /**

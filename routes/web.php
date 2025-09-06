@@ -23,6 +23,7 @@ Route::middleware([
 
     Route::resource('homeworks', HomeworkController::class);
     Route::resource('exercises', ExerciseController::class);
+    Route::resource('users', UserController::class);
     Route::resource('learning-sessions', LearningSessionController::class)->only(['store', 'index']);
 
     Route::get('students', [UserController::class, 'getStudentsToSelect'])->name('users.getStudentsToSelect');

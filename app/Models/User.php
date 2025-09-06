@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -66,6 +67,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * @param $date
+     * @return string
+     */
+    public function getCreatedAtAttribute($date): string
+    {
+        return Carbon::parse($date)->timezone('Europe/Warsaw')->format('Y-m-d H:i:s');
+    }
+
+
+    /**
+     * @param $date
+     * @return string
+     */
+    public function getUpdatedAtAttribute($date): string
+    {
+        return Carbon::parse($date)->timezone('Europe/Warsaw')->format('Y-m-d H:i:s');
     }
 
     /**
