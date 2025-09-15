@@ -25,10 +25,10 @@ let form = useForm({
 });
 
 const checkExercise = (id) => {
-    const answer = document.querySelector('#answer-' + id).value;
+    const answer = document.querySelector('#answer-' + id);
 
     router.patch(route('exercises.check', id), {
-        answer
+        answer: answer.value
     }, {
         preserveScroll: true,
         onSuccess: () => {
@@ -38,7 +38,6 @@ const checkExercise = (id) => {
                     operation: 'Operacja zakończona powodzeniem!'
                 }
             });
-            hasOpenModal.value = false;
         },
         onError: () => {
             toast.error({
@@ -47,6 +46,7 @@ const checkExercise = (id) => {
                     operation: 'Odpowiedź jest niepoprawna.'
                 }
             });
+            answer.value = '';
         },
     })
 }

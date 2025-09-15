@@ -25,6 +25,9 @@ class ExerciseResource extends JsonResource
             'homework' => $this->whenLoaded('homework', function () {
                 return new HomeworkResource($this->homework);
             }),
+            'attempts' => $this->whenLoaded('attempts', function () {
+                return AttemptResource::collection($this->attempts);
+            }),
         ];
     }
 }

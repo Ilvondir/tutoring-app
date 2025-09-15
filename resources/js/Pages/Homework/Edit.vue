@@ -19,7 +19,9 @@ const props = defineProps({
 
 const toast = useToast();
 const hasOpenModal = ref(false);
+const hasOpenHistoryModal = ref(false);
 const exerciseError = ref({})
+const attempts = ref([])
 
 let form = useForm({
     id: props.item.id,
@@ -150,6 +152,28 @@ const moveExercise = (id, direction) => {
     });
 }
 
+const getExerciseHistory = (id) => {
+    axios.get(route('attempts.index', id))
+        .then(res => {
+            toast.success({
+                component: Toast,
+                props: {
+                    operation: 'Pomyślnie pobrano próby rozwiązania!'
+                }
+            });
+            attempts.value = res.data;
+            hasOpenHistoryModal.value = true;
+        })
+        .catch(() => {
+            toast.error({
+                component: Toast,
+                props: {
+                    operation: 'Podczas wykonywania operacji wystąpił błąd.'
+                }
+            });
+        });
+}
+
 </script>
 
 <template>
@@ -257,7 +281,10 @@ const moveExercise = (id, direction) => {
                             <div class="flex items-center mt-5">
                                 <h1 class="text-xl mb-1">Zadanie {{ exercise.order }}</h1>
 
-                                <box-icon name="pencil" color="#4F46E5" size="s" class="cursor-pointer ml-3"
+                                <box-icon name="history" color="#4F46E5" size="s" class="cursor-pointer ml-3"
+                                          @click="() => getExerciseHistory(exercise.id)"></box-icon>
+
+                                <box-icon name="pencil" color="#4F46E5" size="s" class="cursor-pointer ml-4"
                                           @click="() => setEditingExercise(exercise.id, index)"></box-icon>
 
                                 <box-icon name="trash" color="#4F46E5" size="s" class="cursor-pointer ml-1"
@@ -266,7 +293,8 @@ const moveExercise = (id, direction) => {
                                 <box-icon name="chevron-up" color="#4F46E5" size="s"
                                           class="cursor-pointer ml-4" v-if="index !== 0"
                                           @click="() => moveExercise(exercise.id, 1)"></box-icon>
-                                <box-icon name="chevron-down" color="#4F46E5" size="s" class="cursor-pointer ml-1"
+                                <box-icon name="chevron-down" color="#4F46E5" size="s"
+                                          :class="'cursor-pointer ' + (index === 0 ? 'ml-4' : 'ml-1')"
                                           v-if="index !== props.item.exercises.length-1"
                                           @click="() => moveExercise(exercise.id, 0)"></box-icon>
                             </div>
@@ -347,6 +375,55 @@ const moveExercise = (id, direction) => {
             </template>
         </DialogModal>
     </form>
+
+
+    <DialogModal :show="hasOpenHistoryModal">
+        <template #title>
+            Historia wykonywania zadania
+        </template>
+
+
+        <template #content>
+            <div class="overflow-x-auto rounded-2xl shadow">
+                <table class="min-w-full border-collapse bg-white dark:bg-gray-900 text-sm">
+                    <thead>
+                    <tr class="bg-gray-100 dark:bg-gray-700 text-left">
+                        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-200">#</th>
+                        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-200">Wartość</th>
+                        <th class="px-4 py-2 font-semibold text-gray-700 dark:text-gray-200">Data</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr
+                        v-for="(attempt, index) in attempts"
+                        :key="index"
+                        class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    >
+                        <td class="px-4 py-2 text-gray-600 dark:text-gray-300">{{ index + 1 }}</td>
+                        <td :class="'px-4 py-2 text-gray-800 ' + (attempt.is_correct == '0' ? 'text-red' : 'text-[green]')">
+                            {{ attempt.value }}
+                        </td>
+                        <td class="px-4 py-2 text-gray-800 dark:text-gray-200">{{ attempt.created_at }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+
+
+        <template #footer>
+            <JetButton
+                @click="() => hasOpenHistoryModal = false"
+                type="button"
+                class="bg-red-600 hover:bg-red-700 border-red-900 hover:border-red-600"
+            >
+                <div class="flex items-center">
+                    <box-icon name='left-arrow-circle' color="white"></box-icon>
+                    <p class="ml-2 ">Zamknij</p>
+                </div>
+            </JetButton>
+        </template>
+    </DialogModal>
 </template>
 <style>
 .text-red {

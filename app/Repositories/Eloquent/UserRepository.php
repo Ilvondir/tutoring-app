@@ -147,7 +147,7 @@ class UserRepository implements UserRepositoryInterface
         }
 
         try {
-            DB::connection('tenant')->transaction(function () use ($ids) {
+            DB::transaction(function () use ($ids) {
                 $users = User::whereIn('id', $ids)->get();
                 foreach ($users as $user) {
                     $this->delete($user);

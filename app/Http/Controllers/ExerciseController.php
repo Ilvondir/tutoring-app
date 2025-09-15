@@ -68,7 +68,7 @@ class ExerciseController extends \Illuminate\Routing\Controller
     public function check(Exercise $exercise)
     {
         $answer = request()->input('answer');
-        $isCorrect = $this->exerciseRepository->checkAnswer($exercise, $answer);
+        $isCorrect = $this->exerciseService->checkAnswer($exercise, $answer);
 
         if ($isCorrect) {
             $homework = $exercise->homework;

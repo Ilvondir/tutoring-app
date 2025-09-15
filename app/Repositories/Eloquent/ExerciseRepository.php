@@ -87,27 +87,4 @@ class ExerciseRepository implements ExerciseRepositoryInterface
     {
         return $homework->exercises()->whereOrder($order)->first();
     }
-
-    public function checkAnswer(Exercise $exercise, string $answer): bool
-    {
-        try {
-            $userAnswer = Str::lower(Str::trim($answer));
-            $exerciseAnswer = Str::lower(Str::trim($exercise->answer));
-
-            if ($exerciseAnswer === $userAnswer) {
-                $this->update($exercise, ['complete_date' => now()]);
-                return true;
-            }
-
-            return false;
-
-        } catch (\Exception $e) {
-            Log::error('Błąd podczas sprawdzenia odpowiedzi modelu ' . $this->model, [
-                'data' => $exercise,
-                'answer' => $answer,
-                'error' => $e->getMessage(),
-            ]);
-            throw $e;
-        }
-    }
 }

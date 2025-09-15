@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Attempt;
 use App\Models\Exercise;
 use App\Models\Homework;
 use App\Models\User;
@@ -41,7 +42,13 @@ class DatabaseSeeder extends Seeder
                     Exercise::factory()
                         ->count(random_int(2, 5))
                         ->for($homework)
-                        ->create();
+                        ->create()
+                        ->each(function ($exercise) {
+                            Attempt::factory()
+                                ->count(random_int(1, 3))
+                                ->for($exercise)
+                                ->create();
+                        });
                 });
         });
     }
