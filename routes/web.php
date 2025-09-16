@@ -24,7 +24,7 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('homeworks', HomeworkController::class);
-    Route::resource('exercises', ExerciseController::class)->only(['store', 'show', 'destroy']);
+    Route::resource('exercises', ExerciseController::class)->only(['store', 'show', 'destroy', 'update']);
     Route::resource('users', UserController::class);
     Route::resource('learning-sessions', LearningSessionController::class)->only(['store', 'index']);
 
