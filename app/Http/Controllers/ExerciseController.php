@@ -26,7 +26,7 @@ class ExerciseController extends \Illuminate\Routing\Controller
         $this->homeworkRepository = $homeworkRepository;
         $this->model = 'Exercise';
         $this->routePrefix = 'exercises';
-        $this->authorizeResource($this->model);
+        $this->authorizeResource(Exercise::class);
     }
 
     /**

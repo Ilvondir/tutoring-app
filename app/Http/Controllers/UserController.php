@@ -109,4 +109,12 @@ class UserController extends \Illuminate\Routing\Controller
         $this->userRepository->deleteByArray($request->ids);
         return back();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStudentsToSelect(): mixed
+    {
+        return $this->userRepository->getStudentsToSelect();
+    }
 }
