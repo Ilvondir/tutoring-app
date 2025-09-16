@@ -400,7 +400,7 @@ const getExerciseHistory = (id) => {
                         class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
                     >
                         <td class="px-4 py-2 text-gray-600 dark:text-gray-300">{{ index + 1 }}</td>
-                        <td :class="'px-4 py-2 text-gray-800 ' + (attempt.is_correct == '0' ? 'text-red' : 'text-[green]')">
+                        <td :class="'px-4 py-2 text-gray-800 ' + (attempt.is_correct == '0' ? 'text-red' : 'text-green')">
                             {{ attempt.value }}
                         </td>
                         <td class="px-4 py-2 text-gray-800 dark:text-gray-200">{{ attempt.created_at }}</td>
@@ -428,5 +428,9 @@ const getExerciseHistory = (id) => {
 <style>
 .text-red {
     color: red;
+}
+
+.text-green {
+    color: green;
 }
 </style>
