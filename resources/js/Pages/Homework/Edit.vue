@@ -234,18 +234,32 @@ const getExerciseHistory = (id) => {
 
                         <h1 class="text-2xl mb-3 font-bold">Status</h1>
 
-                        <template v-if="props.item.complete_date">
-                            <div class="text-[#14b069]">
-                                Praca domowa została ukończona {{ props.item.complete_date }} przez
-                                {{ props.item.student.name }}.
-                            </div>
+                        <template v-if="props.item.student">
+                            <template v-if="props.item.complete_date">
+                                <div class="text-[#14b069]">
+                                    Praca domowa została ukończona {{ props.item.complete_date }} przez
+                                    {{ props.item.student.name }}.
+                                </div>
+                            </template>
+                            <template v-else>
+                                <div class="text-red">
+                                    Praca domowa nie została ukończona przez {{ props.item.student.name }}.
+                                </div>
+                            </template>
                         </template>
                         <template v-else>
-                            <div class="text-red">
-                                Praca domowa nie została ukończona przez {{ props.item.student.name }}.
-                            </div>
+                            <template v-if="props.item.complete_date">
+                                <div class="text-[#14b069]">
+                                    Praca domowa została ukończona {{ props.item.complete_date }}.
+                                </div>
+                            </template>
+                            <template v-else>
+                                <div class="text-red">
+                                    Praca domowa nie została ukończona.
+                                </div>
+                            </template>
                         </template>
-
+                        
                     </div>
                 </div>
             </div>
