@@ -23,8 +23,10 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "@fireworks-js/vue": "^2.10.8",
         "boxicons": "^2.1.4",
         "lodash": "^4.17.21",
+        "vue-confetti-explosion": "^1.0.2",
         "vue-select": "^4.0.0-beta.0",
         "vue-toastification": "^2.0.0-rc.5",
         "vue3-table-lite": "^1.4.3"
