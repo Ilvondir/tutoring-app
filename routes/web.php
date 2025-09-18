@@ -28,7 +28,7 @@ Route::middleware([
     Route::resource('users', UserController::class);
     Route::resource('learning-sessions', LearningSessionController::class)->only(['store', 'index']);
 
-    Route::get('/attempts/{exercise}', AttemptController::class)->name('attempts.index');
+    Route::get('/exercises/{exercise}/attempts/', AttemptController::class)->name('attempts.index');
 
     Route::get('students', [UserController::class, 'getStudentsToSelect'])->name('users.getStudentsToSelect');
 

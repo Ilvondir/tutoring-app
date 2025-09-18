@@ -17,7 +17,7 @@ return new class extends Migration {
 
             $table->integer('order');
             $table->dateTime('complete_date')->nullable()->default(null);
-            $table->foreignId('homework_id')->constrained('homeworks')->cascadeOnDelete();
+            $table->foreignId('homework_id')->constrained('homeworks')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();
