@@ -33,13 +33,14 @@ class LearningSessionRepository implements LearningSessionInterface
 
     public function paginate(Request $request)
     {
-        $rows = LearningSession::query()->with('user');
-
-        $rows->join('users', 'users.id', '=', 'learning_sessions.user_id')
+        $rows = LearningSession::query()
+            ->with('user')
             ->where(function ($query) use ($request) {
                 $query->orWhere('learning_sessions.id', 'LIKE', '%' . $request->filter . '%')
                     ->orWhere('learning_sessions.created_at', 'LIKE', '%' . $request->filter . '%')
-                    ->orWhere('users.name', 'LIKE', '%' . $request->filter . '%');
+                    ->orWhereHas('user', function ($q) use ($request) {
+                        $q->where('name', 'LIKE', '%' . $request->filter . '%');
+                    });
             });
 
         $order = $request->order === 'id' ? 'learning_sessions.id' : $request->order;
