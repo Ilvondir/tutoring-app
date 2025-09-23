@@ -26,6 +26,7 @@ const attempts = ref([])
 let form = useForm({
     id: props.item.id,
     title: props.item.title,
+    description: props.item.description,
 });
 
 const submitForm = () => {
@@ -204,6 +205,13 @@ const getExerciseHistory = (id) => {
                                 <div class="error-message" v-if="errors.title">{{ errors.title }}</div>
                             </div>
 
+                            <div class="mt-4">
+                                <JetLabel for="description" value="Opis"/>
+                                <TextArea id="description" v-model="form.description" placeholder="Opis"
+                                          class="block w-full"/>
+                                <div class="error-message" v-if="errors.description">{{ errors.description }}</div>
+                            </div>
+
                             <div class="flex justify-end mt-5">
 
                                 <ReturnButton/>
@@ -259,7 +267,7 @@ const getExerciseHistory = (id) => {
                                 </div>
                             </template>
                         </template>
-                        
+
                     </div>
                 </div>
             </div>

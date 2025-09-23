@@ -25,6 +25,7 @@ class HomeworkStoreRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'student_id' => ['required', 'integer', 'exists:users,id'],
+            'description' => ['nullable', 'string'],
         ];
     }
 
@@ -38,6 +39,7 @@ class HomeworkStoreRequest extends FormRequest
         return [
             'title' => 'Tytuł',
             'student_id' => 'ID Studenta',
+            'description' => 'Opis',
         ];
     }
 }

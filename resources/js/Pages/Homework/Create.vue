@@ -10,6 +10,7 @@ import ReturnButton from "@/Components/ReturnButton.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Toast from "@/Components/Toast.vue";
 import {useToast} from "vue-toastification";
+import TextArea from "@/Components/TextArea.vue";
 
 const props = defineProps({
     errors: Object,
@@ -21,6 +22,7 @@ const options = ref([{'id': 0, 'name': ''}]);
 let form = useForm({
     title: '',
     student_id: 0,
+    description: '',
 });
 
 const submitForm = () => {
@@ -48,7 +50,7 @@ onMounted(() => {
     axios.get(route('users.getStudentsToSelect'))
         .then((response) => {
             options.value = response.data;
-        })
+        });
 });
 </script>
 
@@ -77,6 +79,13 @@ onMounted(() => {
                                 <JetInput id="title" v-model="form.title" type="text" placeholder="Tytuł"
                                           class="block w-full" required/>
                                 <div class="error-message" v-if="errors.title">{{ errors.title }}</div>
+                            </div>
+
+                            <div class="mt-4">
+                                <JetLabel for="description" value="Opis"/>
+                                <TextArea id="description" v-model="form.description" placeholder="Opis"
+                                          class="block w-full"/>
+                                <div class="error-message" v-if="errors.description">{{ errors.description }}</div>
                             </div>
 
                             <div class="mt-4">

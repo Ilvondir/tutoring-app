@@ -24,6 +24,7 @@ class HomeworkUpdateRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
+            'description' => ['nullable', 'string'],
         ];
     }
 
@@ -36,6 +37,7 @@ class HomeworkUpdateRequest extends FormRequest
     {
         return [
             'title' => 'Tytuł',
+            'description' => 'Opis',
         ];
     }
 }
