@@ -49,10 +49,33 @@ class LearningSessionController extends \Illuminate\Routing\Controller
      * @param LearningSessionStoreRequest $request
      * @return RedirectResponse
      */
-    public function store(LearningSessionStoreRequest $request)
+    public function store(LearningSessionStoreRequest $request): RedirectResponse
     {
         $validated = $request->validated();
         $this->learningSessionRepository->create($validated);
+        return back();
+    }
+
+    /**
+     * @param LearningSession $learningSession
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy(LearningSession $learningSession): RedirectResponse
+    {
+        $this->learningSessionRepository->delete($learningSession);
+        return back();
+    }
+
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    public function destroyArray(Request $request): RedirectResponse
+    {
+        $this->learningSessionRepository->deleteByArray($request->ids);
         return back();
     }
 }

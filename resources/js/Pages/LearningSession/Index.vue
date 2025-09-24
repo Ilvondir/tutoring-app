@@ -17,9 +17,11 @@ import {useToast} from "vue-toastification";
 import Toast from "@/Components/Toast.vue";
 
 const searchTerm = ref('');
+const ids_array = ref([]);
 const url = ref('');
 const protocol = ref('');
 const page = usePage();
+const toast = useToast();
 
 const table = reactive({
     isLoading: false,
@@ -69,8 +71,18 @@ const table = reactive({
                 return `${hours}:${minutes}:${seconds}`
             }
         },
+        {
+            label: 'Operacje',
+            field: 'actions',
+            width: '10%',
+            sortable: false,
+        },
     ]
 });
+
+const updateCheckedRows = (rowsKey) => {
+    ids_array.value = rowsKey;
+};
 
 const doSearch = (offset, limit, order, sort, type = null) => {
     table.isLoading = true;
@@ -105,6 +117,57 @@ const doSearch = (offset, limit, order, sort, type = null) => {
     });
 };
 
+const deleteRow = (id) => {
+    if (confirm('Czy na pewno chcesz usunąć ten element?')) {
+        router.delete(route('learning-sessions.destroy', id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                doSearch(localStorage.learning_sessions_offset ?? 0, localStorage.learning_sessions_limit ?? 10, localStorage.learning_sessions_order ?? 'id', localStorage.learning_sessions_sort ?? 'desc', localStorage.learning_sessions_type ?? null);
+                toast.success({
+                    component: Toast,
+                    props: {
+                        operation: 'Operacja zakończona powodzeniem!'
+                    }
+                });
+            },
+            onError: () => {
+                toast.error({
+                    component: Toast,
+                    props: {
+                        operation: 'Podczas wykonywania operacji wystąpił błąd.'
+                    }
+                });
+            },
+        });
+    }
+};
+
+const deleteRowsWithArray = async () => {
+    if (ids_array.value.length >= 1 && confirm('Czy na pewno chcesz usunąć zaznaczone elementy?')) {
+        router.get(route('learning-sessions.destroyArray', {ids: ids_array.value}), {}, {
+            preserveScroll: true,
+            onFinish: () => {
+                doSearch(localStorage.learning_sessions_offset ?? 0, localStorage.learning_sessions_limit ?? 10, localStorage.learning_sessions_order ?? 'id', localStorage.learning_sessions_sort ?? 'desc', localStorage.learning_sessions_type ?? null);
+                toast.success({
+                    component: Toast,
+                    props: {
+                        operation: 'Operacja zakończona powodzeniem!'
+                    }
+                });
+            },
+            onError: () => {
+                toast.error({
+                    component: Toast,
+                    props: {
+                        operation: 'Podczas wykonywania operacji wystąpił błąd.'
+                    }
+                });
+            },
+        });
+    } else {
+        alert('Operacja zakończona niepowodzeniem');
+    }
+};
 
 watch(
     searchTerm,
@@ -173,6 +236,15 @@ onMounted(() => {
                                     />
                                 </div>
                             </div>
+                            <div class="flex flex-row">
+                                <JetButton
+                                    @click="deleteRowsWithArray"
+                                    type="submit"
+                                    class="flex items-center bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 border-b-4 border-red-900 hover:border-red-600 rounded cursor-pointer mx-2 h-10">
+                                    <p class="mr-2">Usuń zaznaczone</p>
+                                    <box-icon name='trash' color="white"></box-icon>
+                                </JetButton>
+                            </div>
                         </div>
                     </div>
 
@@ -198,10 +270,25 @@ onMounted(() => {
                         :pageSize="parseInt(table.pageSize)"
                         :messages="table.messages"
                         :page-options="table.pageOptions"
-                        :has-checkbox="false"
+                        :has-checkbox="true"
                         @do-search="doSearch"
+                        @return-checked-rows="updateCheckedRows"
                         @is-finished="table.isLoading = false"
-                    />
+                    >
+                        <template v-slot:actions="data">
+                            <div class="justify-center flex">
+                                <div class>
+                                    <button
+                                        @click="deleteRow(data.value.id)"
+                                        type="submit"
+                                        class="cursor-pointer"
+                                    >
+                                        <DeleteIcon/>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    </table-lite>
 
                 </div>
             </div>

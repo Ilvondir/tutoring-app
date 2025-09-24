@@ -45,7 +45,7 @@ class LearningSessionPolicy
      */
     public function delete(User $user, LearningSession $learningSession): bool
     {
-        return false;
+        return $user->hasRole(['teacher']);
     }
 
     /**

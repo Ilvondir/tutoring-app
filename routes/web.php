@@ -26,7 +26,7 @@ Route::middleware([
     Route::resource('homeworks', HomeworkController::class);
     Route::resource('exercises', ExerciseController::class)->only(['store', 'show', 'destroy', 'update']);
     Route::resource('users', UserController::class);
-    Route::resource('learning-sessions', LearningSessionController::class)->only(['store', 'index']);
+    Route::resource('learning-sessions', LearningSessionController::class)->only(['store', 'index', 'destroy']);
 
     Route::get('/exercises/{exercise}/attempts/', AttemptController::class)->name('attempts.index');
 
@@ -34,6 +34,7 @@ Route::middleware([
 
     Route::get('homeworks/destroyArray/ids', [HomeworkController::class, 'destroyArray'])->name('homeworks.destroyArray');
     Route::get('users/destroyArray/ids', [UserController::class, 'destroyArray'])->name('users.destroyArray');
+    Route::get('learning-sessions/destroyArray/ids', [LearningSessionController::class, 'destroyArray'])->name('learning-sessions.destroyArray');
 
     Route::patch('exercises/{exercise}/move', [ExerciseController::class, 'move'])->name('exercises.move');
     Route::patch('exercises/{exercise}/check', [ExerciseController::class, 'check'])->name('exercises.check');
