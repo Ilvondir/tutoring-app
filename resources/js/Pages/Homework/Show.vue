@@ -43,6 +43,7 @@ const options = ref({
 let form = useForm({
     id: props.item.id,
     title: props.item.title,
+    description: props.item.description,
 });
 
 const checkExercise = (id, order) => {
@@ -59,7 +60,7 @@ const checkExercise = (id, order) => {
                     operation: 'Operacja zakończona powodzeniem!'
                 }
             });
-            
+
             if (props.item.complete_date) {
                 finishHomeworkAudio.play();
                 fireworksActive.value = true;
@@ -136,7 +137,12 @@ onMounted(() => {
                             <JetLabel for="title" value="Tytuł"/>
                             <JetInput id="title" v-model="form.title" type="text" placeholder="Tytuł"
                                       class="block w-full" disabled/>
-                            <div class="error-message" v-if="errors.title">{{ errors.title }}</div>
+                        </div>
+
+                        <div class="mt-4">
+                            <JetLabel for="description" value="Opis"/>
+                            <TextArea id="description" v-model="form.description" placeholder="Opis"
+                                      class="block w-full" rows="10" disabled/>
                         </div>
 
                         <div class="flex justify-end mt-5">
