@@ -56,7 +56,7 @@ class HomeworkRepository implements HomeworkRepositoryInterface
 
     public function loadRelations(Homework $homework)
     {
-        return $homework->load(['exercises', 'teacher', 'student']);
+        return $homework->load(['exercises.attempts', 'teacher', 'student']);
     }
 
     public function create(array $data)

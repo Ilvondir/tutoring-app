@@ -1,7 +1,7 @@
 <script setup>
 import {Link, router, useForm} from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import JetButton from "@/Components/Button.vue";
 import JetLabel from "@/Components/Label.vue";
 import JetInput from "@/Components/Input.vue";
@@ -329,6 +329,9 @@ const getExerciseHistory = (id) => {
                                       class="block w-full" disabled/>
                             <div class="text-[#14b069]" v-if="exercise.complete_date">
                                 Rozwiązane {{ exercise.complete_date }}.
+                                <span class="text-red" v-if="exercise.attempts.length > 1">
+                                    ({{ exercise.attempts.length - 1 }} błędów)
+                                </span>
                             </div>
                             <div class="text-red" v-else>
                                 Nie rozwiązane.

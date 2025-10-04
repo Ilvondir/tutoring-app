@@ -56,8 +56,9 @@ class HomeworkController extends \Illuminate\Routing\Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param HomeworkUpdateRequest $request
+     * @param HomeworkStoreRequest $request
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function store(HomeworkStoreRequest $request): RedirectResponse
     {
