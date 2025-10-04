@@ -47,7 +47,12 @@ let form = useForm({
 });
 
 const checkExercise = (id, order) => {
-    const answer = document.querySelector('#answer-' + id);
+    const answer = document.querySelector(`#answer-${id}`);
+    const button = document.querySelector(`#check-button-${id}`);
+
+    if (button) {
+        button.disabled = true;
+    }
 
     router.patch(route('exercises.check', id), {
         answer: answer.value
@@ -83,6 +88,11 @@ const checkExercise = (id, order) => {
             });
             answer.value = '';
         },
+        onFinish: () => {
+            if (button) {
+                button.disabled = false;
+            }
+        }
     })
 }
 
@@ -222,6 +232,7 @@ onMounted(() => {
                                         <JetButton
                                             type="submit"
                                             class="flex ml-2 items-center bg-[#4F46E5] hover:bg-[#2F26C5] border-[#2F26C5] hover:border-[#4F46E5] text-white font-medium py-2 px-4 border-b-4 rounded cursor-pointer h-10"
+                                            :id="`check-button-${exercise.id}`"
                                         >
                                             <div class="flex items-center">
                                                 <p class="mr-2">Sprawdź</p>

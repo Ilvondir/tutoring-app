@@ -174,7 +174,6 @@ const getExerciseHistory = (id) => {
             });
         });
 }
-
 </script>
 
 <template>
