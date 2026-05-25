@@ -293,7 +293,6 @@ const getExerciseHistory = (id) => {
                                         <box-icon name='plus-circle' color="white"></box-icon>
                                     </div>
                                 </JetButton>
-
                             </div>
                         </div>
 
@@ -337,6 +336,20 @@ const getExerciseHistory = (id) => {
                             </div>
                         </template>
 
+                        <div v-if="props.item.exercises.length > 1" class="flex justify-end">
+                            <div>
+                                <JetButton
+                                    @click="setCreatingExercise"
+                                    type="submit"
+                                    class="flex ml-2 items-center bg-[#4F46E5] hover:bg-[#2F26C5] border-[#2F26C5] hover:border-[#4F46E5] text-white font-medium py-2 px-4 border-b-4 rounded cursor-pointer h-10"
+                                >
+                                    <div class="flex items-center">
+                                        <p class="mr-2 ">Dodaj</p>
+                                        <box-icon name='plus-circle' color="white"></box-icon>
+                                    </div>
+                                </JetButton>
+                            </div>
+                        </div>
 
                     </div>
                 </div>

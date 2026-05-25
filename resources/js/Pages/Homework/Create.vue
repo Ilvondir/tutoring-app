@@ -84,7 +84,7 @@ onMounted(() => {
                             <div class="mt-4">
                                 <JetLabel for="description" value="Opis"/>
                                 <TextArea id="description" v-model="form.description" placeholder="Opis"
-                                          class="block w-full"/>
+                                          class="block w-full" rows="10"/>
                                 <div class="error-message" v-if="errors.description">{{ errors.description }}</div>
                             </div>
 
