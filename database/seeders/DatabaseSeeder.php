@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             $user->assignRole($teacherRole);
         });
 
-        User::factory(10)->create()->each(function ($student) use ($studentRole) {
+        $seedStudentHomework = function (User $student) use ($studentRole) {
             $student->assignRole($studentRole);
 
             Homework::factory()
@@ -50,6 +50,13 @@ class DatabaseSeeder extends Seeder
                                 ->create();
                         });
                 });
-        });
+        };
+
+        $seedStudentHomework(User::factory()->create([
+            'name' => 'Test Student',
+            'email' => 'student@example.com',
+        ]));
+
+        User::factory(10)->create()->each($seedStudentHomework);
     }
 }
