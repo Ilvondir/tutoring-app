@@ -34,7 +34,6 @@ Feedback after user actions is displayed with Vue Toastification. Lists of homew
 - Vue Select 4.0.0
 - Vue Confetti Explosion 1.0.2
 - Fireworks.js 2.10.8
-- Lodash 4.17.21
 
 ## Requirements
 
