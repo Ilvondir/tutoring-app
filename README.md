@@ -1,6 +1,6 @@
-# Korepetycje
+# Tutoring App
 
-Korepetycje is a web application for managing private tutoring created using the Laravel framework. In addition to Laravel, Vue was also used. These frameworks were integrated using the Inertia framework that allows for building SPA applications despite following the MVC architecture. The interface of the application is in Polish. The application is created on a SQLite database by default and can also run on MySQL.
+Tutoring App is a web application for managing private tutoring created using the Laravel framework. In addition to Laravel, Vue was also used. These frameworks were integrated using the Inertia framework that allows for building SPA applications despite following the MVC architecture. The interface of the application is in Polish. The application is created on a SQLite database by default and can also run on MySQL.
 
 The application allows logging in with two user roles: teacher and student. Roles and access control are handled with the Spatie Laravel Permission package together with Laravel policies.
 
@@ -20,28 +20,20 @@ Feedback after user actions is displayed with Vue Toastification. Lists of homew
 - Inertia.js 2.0.6
 - Laravel Jetstream 5.3.8
 - Laravel Fortify 1.30.0
-- Laravel Sanctum 4.2.0
 - Spatie Laravel Permission 6.21.0
-- Laravel Lang 6.7.1
-- Ziggy 2.5.3
 - Sail 1.45.0
 - IDE Helper 3.6.0
 
 ### Frontend
-- HTML 5
-- CSS 3
-- JavaScript ES6
 - Vue 3 3.5.21
 - Inertia.js 2.1.4
 - Tailwind CSS 3.4.17
-- Vite 6.3.5
 - Boxicons 2.1.4
 - Vue Toastification 2.0.0
 - Vue3 Table Lite 1.4.3
 - Vue Select 4.0.0
 - Vue Confetti Explosion 1.0.2
 - Fireworks.js 2.10.8
-- Axios 1.11.0
 - Lodash 4.17.21
 
 ## Requirements
@@ -72,3 +64,7 @@ Or only:
 | Student  | student@example.com   | password |
 
 You can also run this app on Docker containers using Laravel Sail.
+
+## First Look
+
+![firstlook](public/firstlook/firstlook.png?raw=true)
